@@ -174,7 +174,7 @@ def get_loader_brats(args):
         test_files = load_decathlon_datalist(datalist_json,
                                             True,
                                             "test1",
-                                            base_dir=data_dir)#它对test文件的处理只有image项没有label项 所以得修改一下
+                                            base_dir=data_dir)
         # print(test_files)
         test_ds = data.Dataset(data=test_files, transform=test_transform)
         test_sampler = Sampler(test_ds, shuffle=False) if args.distributed else None
