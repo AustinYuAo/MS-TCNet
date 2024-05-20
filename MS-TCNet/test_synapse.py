@@ -14,8 +14,8 @@ import os
 import torch
 import numpy as np
 from utils.sliding_window_inference_for_mstcnet import sliding_window_inference
-from networks.mstcnet_btcv import mstcnet as mstcnet_btcv
-from utils.data_utils_btcv import get_loader_btcv
+from networks.mstcnet_synapse import mstcnet as mstcnet_synapse
+from utils.data_utils_synapse import get_loader_synapse
 from utils.utils import resample_3d
 import nibabel as nib
 
@@ -61,7 +61,7 @@ parser.add_argument('--save_image', default='No', type=str, help=' Yes:save imag
 def main():
     args = parser.parse_args()
     args.test_mode = True
-    val_loader = get_loader_btcv(args)
+    val_loader = get_loader_synapse(args)
     pretrained_dir = args.pretrained_dir
     model_name = args.pretrained_model_name
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -75,7 +75,7 @@ def main():
     if args.saved_checkpoint == 'torchscript':
         model = torch.jit.load(pretrained_pth)
     elif args.saved_checkpoint == 'ckpt':
-        model =mstcnet_btcv(
+        model =mstcnet_synapse(
             in_channels=1,
             out_channels=9,
             img_size=(96, 96, 96),
