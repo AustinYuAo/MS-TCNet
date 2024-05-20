@@ -95,7 +95,7 @@ parser.add_argument('--smooth_nr', default=0.0, type=float, help='constant added
 
 
 def main():
-    args = parser.parse_args()#参数赋值
+    args = parser.parse_args()
     args.amp = not args.noamp
     args.logdir = './runs/' + args.logdir
     if args.distributed:
@@ -110,7 +110,7 @@ def main():
         main_worker(gpu=0, args=args)
 
 def main_worker(gpu, args):
-    #在这里训练
+
     if args.distributed:
         torch.multiprocessing.set_start_method('fork', force=True)
     np.set_printoptions(formatter={'float': '{: 0.3f}'.format}, suppress=True)
