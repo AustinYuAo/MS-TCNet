@@ -22,9 +22,9 @@ from monai.metrics import DiceMetric
 from monai.utils.enums import MetricReduction
 from monai.transforms import AsDiscrete,Activations,Compose
 
-from networks.mstcnet_btcv import mstcnet as mstcnet_btcv
-from utils.data_utils_btcv import get_loader_btcv
-from trainer_btcv import run_training_btcv 
+from networks.mstcnet_synapse import mstcnet as mstcnet_synapse
+from utils.data_utils_synapse import get_loader_synapse
+from trainer_synapse import run_training_synapse 
 
 from networks.mstcnet_brats import mstcnet as mstcnet_brats
 from utils.data_utils_brats import get_loader_brats
@@ -61,7 +61,7 @@ parser.add_argument('--rank', default=0, type=int, help='node rank for distribut
 parser.add_argument('--dist-url', default='tcp://127.0.0.1:23456', type=str, help='distributed url')
 parser.add_argument('--dist-backend', default='nccl', type=str, help='distributed backend')
 parser.add_argument('--workers', default=8, type=int, help='number of workers')
-parser.add_argument('--model_name', default='mstcnet_btcv', type=str, help='model name')
+parser.add_argument('--model_name', default='mstcnet_synapse', type=str, help='model name')
 parser.add_argument('--pos_embed', default='perceptron', type=str, help='type of position embedding')
 parser.add_argument('--norm_name', default='instance', type=str, help='normalization layer type in decoder')
 parser.add_argument('--feature_size', default=32, type=int, help='feature size dimention')
@@ -131,12 +131,12 @@ def main_worker(gpu, args):
     inf_size = [args.roi_x, args.roi_y, args.roi_z]
     pretrained_dir = args.pretrained_dir
 
-    if (args.model_name is None) or args.model_name == 'mstcnet_btcv':
-        print("mstcnet_btcv")
+    if (args.model_name is None) or args.model_name == 'mstcnet_synapse':
+        print("mstcnet_synapse")
         
-        loader = get_loader_btcv(args)
+        loader = get_loader_synapse(args)
 
-        model =mstcnet_btcv(
+        model =mstcnet_synapse(
             in_channels=args.in_channels,
             out_channels=args.out_channels,
             img_size=(args.roi_x, args.roi_y, args.roi_z),
@@ -306,8 +306,8 @@ def main_worker(gpu, args):
     else:
         scheduler = None
 
-    if args.model_name == 'mstcnet_btcv':
-        accuracy = run_training_btcv(model=model,
+    if args.model_name == 'mstcnet_synapse':
+        accuracy = run_training_synapse(model=model,
                                 train_loader=loader[0],
                                 val_loader=loader[1],
                                 optimizer=optimizer,
