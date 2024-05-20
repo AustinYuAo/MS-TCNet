@@ -69,7 +69,7 @@ def train_epoch(model,
             data, target = batch_data['image'], batch_data['label']
 
         # data = (data - data.min()) / (data.max() - data.min())#min max normlization
-        data = (data - data.mean()) / data.var()  # normalized to zero-mean and unit-variance
+        data = (data - data.mean()) / data.std()
 
         data, target = data.cuda(args.rank), target.cuda(args.rank)
 
@@ -129,7 +129,7 @@ def val_epoch(model,
                 data, target = batch_data['image'], batch_data['label']
                 
             # data = (data - data.min()) / (data.max() - data.min())#min max normlization
-            data = (data - data.mean()) / data.var()  #normalized to zero-mean and unit-variance
+            data = (data - data.mean()) / data.std()
 
             data, target = data.cuda(args.rank), target.cuda(args.rank)
             with autocast(enabled=args.amp):
