@@ -1,4 +1,5 @@
-# MS-TCNet: An effective Transformer–CNN combined network using multi-scale feature learning for 3D medical image segmentation[paper](https://www.sciencedirect.com/science/article/abs/pii/S0010482524001410)
+# MS-TCNet: An effective Transformer–CNN combined network using multi-scale feature learning for 3D medical image segmentation 
+ [paper] (https://www.sciencedirect.com/science/article/abs/pii/S0010482524001410)
 
 ## Installation
 
