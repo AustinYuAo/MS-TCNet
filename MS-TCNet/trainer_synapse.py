@@ -201,7 +201,7 @@ def save_checkpoint(model,
     torch.save(save_dict, filename)
     print('Saving checkpoint', filename)
 
-def run_training_btcv(model,
+def run_training_synapse(model,
                  train_loader,
                  val_loader,
                  optimizer,
