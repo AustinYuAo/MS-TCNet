@@ -8,16 +8,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# 新写的test 加了保存图像
 
-"""
-test 方法
-
-2024年5月3日
-python test_acdc.py --data_dir=/raid/user_dir/ay/data/BTCV/UnetRdata --pretrained_dir=/raid/user_dir/ay/UnetRSSA3D3-likeSwinUNetR-FAN2-DS/MS-TCNet/runs/mstcnet_btcv/ --pretrained_model_name=model.pth --saved_checkpoint=ckpt --json_list=dataset_18_12.json
-
-python test_acdc.py --pretrained_dir=/raid/user_dir/ay/UnetRSSA3D3-likeSwinUNetR-FAN2-DS/MS-TCNet/runs/mstcnet_acdc1/ --pretrained_model_name=model5400.pth --saved_checkpoint=ckpt
-"""
 
 
 import os
