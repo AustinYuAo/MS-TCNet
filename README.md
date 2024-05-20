@@ -1,7 +1,7 @@
 # MS-TCNet: An effective Transformer–CNN combined network using multi-scale feature learning for 3D medical image segmentation
 
 ## Installation
-'''
+
 git clone https://github.com/AustinYuAo/MS-TCNet.git
 
 cd MS-TCNet
@@ -9,7 +9,7 @@ cd MS-TCNet
 conda env create -f environment.yml
 
 source activate MS-TCNet
-'''
+
 ## Trainning
 
 
