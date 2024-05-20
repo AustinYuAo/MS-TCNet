@@ -14,11 +14,11 @@ source activate MS-TCNet
 ## Dataset  
 1.Download
 
-Synapse dataset download: https://www.synapse.org/#!Synapse:syn3193805/wiki/217789
+Synapse dataset [download](https://www.synapse.org/#!Synapse:syn3193805/wiki/217789)
  
-ACDC dataset download: https://www.creatis.insa-lyon.fr/Challenge/acdc/databases.html
+ACDC dataset [download](https://www.creatis.insa-lyon.fr/Challenge/acdc/databases.html)
 
-MSD BraTS dataset download: http://medicaldecathlon.com/dataaws/
+MSD BraTS dataset [download](http://medicaldecathlon.com/dataaws/)
 
 2. your dataset folders should be organized as follows:
 ```
