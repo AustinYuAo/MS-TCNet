@@ -64,6 +64,7 @@ python test_acdc.py --data_dir=your_dataset_dir --json_list=dataset_ACDC.json --
 python test_brats.py --data_dir=your_dataset_dir --json_list=dataset_BraTS.json --pretrained_dir=your_pretrained_dir --pretrained_model_name=model.pth --saved_checkpoint=ckpt  
 
 ## References
+```
 @article{ao2024ms,
   title={MS-TCNet: An effective Transformer--CNN combined network using multi-scale feature learning for 3D medical image segmentation},
   author={Ao, Yu and Shi, Weili and Ji, Bai and Miao, Yu and He, Wei and Jiang, Zhengang},
@@ -73,6 +74,6 @@ python test_brats.py --data_dir=your_dataset_dir --json_list=dataset_BraTS.json 
   year={2024},
   publisher={Elsevier}
 }
-
+```
 ## Acknowledgement
 The code is implemented based on [UNETR](https://github.com/Project-MONAI/research-contributions/tree/main/UNETR/BTCV). We would like to express our sincere thanks to the contributors.
