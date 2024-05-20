@@ -8,15 +8,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# 新写的test 加了保存图像
 
-"""
-test 方法
-
-2024年5月13日
-python test_brats.py --pretrained_dir=/raid/user_dir/ay/UnetRSSA3D3-likeSwinUNetR-FAN2-DS/MS-TCNet/runs/mstcnet_brats/ --pretrained_model_name=model.pth --saved_checkpoint=ckpt
-
-"""
 
 
 import os
@@ -188,7 +180,7 @@ def main():
             val_output_convert = [post_pred(post_sigmoid(val_pred_tensor))for val_pred_tensor in val_outputs_list]
             # print(val_output_convert[0].shape)
 
-            acc = dice_acc(y_pred=val_output_convert, y=val_labels_list)#直接计算多通道的分割结果
+            acc = dice_acc(y_pred=val_output_convert, y=val_labels_list)
             acc_list = acc.detach().cpu().numpy()
 
             print("acc",acc_list[0][0]," ",acc_list[0][1]," ",acc_list[0][2])
@@ -199,7 +191,7 @@ def main():
             NET_2dice_list_sub.append(acc_list[0][1])
             ET_3dice_list_sub.append(acc_list[0][2])
 
-            acc_hd = metric_hd(y_pred=val_output_convert, y=val_labels_list)#直接计算多通道的分割结果
+            acc_hd = metric_hd(y_pred=val_output_convert, y=val_labels_list)
             acc_hd_list = acc_hd.detach().cpu().numpy()
             print("acc_hd95",acc_hd_list[0][0]," ",acc_hd_list[0][1]," ",acc_hd_list[0][2])
             print("acc_hd95_average",np.mean(acc_hd_list[0]))
@@ -217,21 +209,21 @@ def main():
 
             # print("val_outputs",val_outputs.shape)
             seg_out = np.zeros((val_outputs.shape[1], val_outputs.shape[2], val_outputs.shape[3]))
-            seg_out[val_outputs[1] == 1] = 2#整个肿瘤WT
-            seg_out[val_outputs[0] == 1] = 1#肿瘤核心TC
-            seg_out[val_outputs[2] == 1] = 3#增强肿瘤ET 按照这个顺序合并是为了 不重复覆盖区域
+            seg_out[val_outputs[1] == 1] = 2#WT
+            seg_out[val_outputs[0] == 1] = 1#TC
+            seg_out[val_outputs[2] == 1] = 3#ET 
 
             val_labels=val_labels[0].detach().cpu().numpy()
             seg_label = np.zeros((val_labels.shape[1], val_labels.shape[2], val_labels.shape[3]))
-            seg_label[val_labels[1] == 1] = 2#整个肿瘤WT
-            seg_label[val_labels[0] == 1] = 1#肿瘤核心TC
-            seg_label[val_labels[2] == 1] = 3#增强肿瘤ET 按照这个顺序合并是为了 不重复覆盖区域
+            seg_label[val_labels[1] == 1] = 2
+            seg_label[val_labels[0] == 1] = 1
+            seg_label[val_labels[2] == 1] = 3
 
-            dice_list_case=[]#将多通道的分割结果合并成单通道又再次计算量一次
+            dice_list_case=[]
             hd95_list_case=[]
             for i in range(1, 4):
                 organ_Dice = dice(seg_out == i, seg_label == i)
-                print(i,'dice',np.around(organ_Dice,8))#np.around(organ_Dice,6) 保留后六位并且四舍五入
+                print(i,'dice',np.around(organ_Dice,8))#np.around(organ_Dice,6)
                 if organ_Dice!=0:
                     dice_list_case.append(organ_Dice)
                 if i==1:
@@ -248,7 +240,7 @@ def main():
 
             for i in range(1, 4):
                 organ_hd = hd(seg_out == i, seg_label == i)
-                print(i,'dice',np.around(organ_hd,8))#np.around(organ_hd,6) 保留后六位并且四舍五入
+                print(i,'dice',np.around(organ_hd,8))#np.around(organ_hd,6) 
                 if organ_hd!=0:
                     hd95_list_case.append(organ_hd)
                 if i==1:
@@ -259,7 +251,7 @@ def main():
                     ET_3hd95_list_sub1.append(organ_hd)
             mean_hd95 = np.mean(hd95_list_case)
             print("Mean Organ HD95: {}".format(mean_hd95))
-            hd95_list_original_label_case1.append(mean_hd95)#ED ET NET 的原始hd95
+            hd95_list_original_label_case1.append(mean_hd95)
 
 
             
@@ -284,13 +276,13 @@ def main():
             hd95_list_five_label_case.append(np.mean(hd95_list_case))
 
             organ_Dice_ET = dice(infer_et, label_et)
-            # print('ET dice',np.around(organ_Dice_ET,8))#np.around(organ_Dice,6) 保留后六位并且四舍五入
+            # print('ET dice',np.around(organ_Dice_ET,8))#np.around(organ_Dice,6) 
 
             organ_Dice_TC = dice(infer_tc, label_tc)
-            print('TC dice',np.around(organ_Dice_TC,8))#np.around(organ_Dice,6) 保留后六位并且四舍五入
+            print('TC dice',np.around(organ_Dice_TC,8))#np.around(organ_Dice,6) 
 
             organ_Dice_WT = dice(infer_wt, label_wt)
-            print('WT dice',np.around(organ_Dice_WT,8))#np.around(organ_Dice,6) 保留后六位并且四舍五入
+            print('WT dice',np.around(organ_Dice_WT,8))#np.around(organ_Dice,6) 
             
             TCdice_list_sub.append(organ_Dice_TC)
             WTdice_list_sub.append(organ_Dice_WT)
@@ -305,10 +297,10 @@ def main():
 
             if args.save_image=="Yes":
                 nib.save(nib.Nifti1Image(seg_out.astype(np.uint8), original_affine),
-                        os.path.join(output_directory, "pred_"+img_name))#保存图像
+                        os.path.join(output_directory, "pred_"+img_name))
 
                 # nib.save(nib.Nifti1Image(seg_label.astype(np.uint8), original_affine),
-                #         os.path.join(output_directory, "label_"+img_name))#保存图像    
+                #         os.path.join(output_directory, "label_"+img_name)) 
 
         print(" ")
         print("dice_list_original_label Overall Mean Dice: {}".format(np.mean(dice_list_original_label_case)),"total:",len(dice_list_original_label_case))
@@ -347,7 +339,7 @@ def main():
         print("WT Mean hd95: {}".format(np.mean(WThd95_list_sub)),"total:",len(WThd95_list_sub))
         print("ET Mean hd95: {}".format(np.mean(EThd95_list_sub)),"total:",len(EThd95_list_sub))
 
-        dice_list=np.zeros([24,9],dtype=np.float64)#输出所有的dice
+        dice_list=np.zeros([24,9],dtype=np.float64)
         for i in range(24):
             dice_list[i][0]=ED_1dice_list_sub[i]
             dice_list[i][1]=NET_2dice_list_sub[i]
@@ -361,7 +353,7 @@ def main():
             dice_list[i][7]=WTdice_list_sub[i]
             dice_list[i][8]=ETdice_list_sub[i]
 
-        hd95_list=np.zeros([24,9],dtype=np.float64)#输出所有的dice
+        hd95_list=np.zeros([24,9],dtype=np.float64)
         for i in range(24):
             hd95_list[i][0]=ED_1hd95_list_sub[i]
             hd95_list[i][1]=NET_2hd95_list_sub[i]
@@ -375,7 +367,7 @@ def main():
             hd95_list[i][7]=WThd95_list_sub[i]
             hd95_list[i][8]=EThd95_list_sub[i]
 
-        # compute_Metrics_8organs(output_directory)#自己写的多度量函数
+
         np.savetxt(output_directory + 'dice_list.csv', dice_list, fmt='%.16f')
 
         np.savetxt(output_directory + 'hd_list.csv', hd95_list, fmt='%.16f')
