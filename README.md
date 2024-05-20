@@ -42,7 +42,7 @@ MSD BraTS dataset [download](http://medicaldecathlon.com/dataaws/)
         ├── labelsTs/  
         ├── dataset.json  
 ```
-You can refer to the corresponding JSON files for the data partitioning of each dataset. We have stored these files in the data json folder(https://github.com/AustinYuAo/MS-TCNet/tree/main/MS-TCNet/dataset%20json). You can also copy these files to the corresponding dataset folder for training.
+You can refer to the corresponding JSON files for the data partitioning of each dataset. We have stored these files in the [data json folder](https://github.com/AustinYuAo/MS-TCNet/tree/main/MS-TCNet/dataset%20json). You can also copy these files to the corresponding dataset folder for training.
 ## Trainning
 ### Synapse dataset  
 python main.py --max_epochs=8000 --batch_size=2 --logdir=mstcnet_btcv --save_checkpoint --data_dir=your_dataset_dir --json_list=dataset_Synapse.json --model_name=mstcnet_btcv --workers=6  
