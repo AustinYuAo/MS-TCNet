@@ -3,8 +3,11 @@
 ## Installation
 '''
 git clone https://github.com/AustinYuAo/MS-TCNet.git
+
 cd MS-TCNet
+
 conda env create -f environment.yml
+
 source activate MS-TCNet
 '''
 ## Trainning
