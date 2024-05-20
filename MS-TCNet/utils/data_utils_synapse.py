@@ -63,7 +63,7 @@ class Sampler(torch.utils.data.Sampler):
     def set_epoch(self, epoch):
         self.epoch = epoch
 
-def get_loader_btcv(args):
+def get_loader_synapse(args):
     data_dir = args.data_dir
     datalist_json = os.path.join(data_dir, args.json_list)
     train_transform = transforms.Compose(
